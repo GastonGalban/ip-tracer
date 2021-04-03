@@ -1,9 +1,9 @@
-package com.gastongalban.iptracer;
+package com.gastongalban.iptracer.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.gastongalban.iptracer")
 public class IpTracerApplication {
 
     public static void main(String[] args) {
