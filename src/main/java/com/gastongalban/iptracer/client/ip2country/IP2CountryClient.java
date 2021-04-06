@@ -1,9 +1,8 @@
 package com.gastongalban.iptracer.client.ip2country;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gastongalban.iptracer.client.ip2country.model.IP2CountryDTO;
+import com.gastongalban.iptracer.client.ip2country.dto.IP2CountryDTO;
 import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;

@@ -1,4 +1,4 @@
-package com.gastongalban.iptracer.client.ip2country.model;
+package com.gastongalban.iptracer.client.ip2country.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
