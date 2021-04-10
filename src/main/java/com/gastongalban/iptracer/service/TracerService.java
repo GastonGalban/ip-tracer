@@ -55,7 +55,7 @@ public class TracerService {
                 country.getLanguages().forEach(builder::withLanguage);
                 country.getTimezones().stream().map(this::transformTimeZoneToDate).forEach(builder::withDateData);
                 country.getCurrencyCodes().forEach(currCode -> {
-                    Optional<Double> price = currConvClient.getCurrency(currCode);
+                    Optional<Double> price = this.getCurrency(currCode);
                     price.ifPresent(aDouble -> builder.withCurrencyData(new CurrencyData(currCode, aDouble)));
                 });
                 return Optional.of(builder.build());
@@ -63,6 +63,13 @@ public class TracerService {
             return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    private Optional<Double> getCurrency(String currCode) {
+        if(currCode.equals("USD")){
+            return Optional.of(1d);
+        }
+        return currConvClient.getCurrency(currCode);
     }
 
     private String transformTimeZoneToDate(String timezone) {
