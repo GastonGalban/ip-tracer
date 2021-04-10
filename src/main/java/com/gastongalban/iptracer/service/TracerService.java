@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Optional;
 import java.util.TimeZone;
@@ -65,7 +66,9 @@ public class TracerService {
     }
 
     private String transformTimeZoneToDate(String timezone) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ ");
-        return formatter.format(new Date());
+        ZoneId of = ZoneId.of(timezone);
+        ZonedDateTime now = LocalDateTime.now().atZone(of);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss z");
+        return now.format(formatter);
     }
 }
