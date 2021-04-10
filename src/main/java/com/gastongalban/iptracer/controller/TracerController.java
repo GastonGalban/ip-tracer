@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class TracerController {
 
@@ -22,7 +24,9 @@ public class TracerController {
 
     @GetMapping("/trace")
     public TraceData getTracing(@RequestParam String ip){
-        LOGGER.info("Tracing IP %s",ip);
-        return tracerService.trace(ip);
+        LOGGER.info("Tracing IP {}",ip);
+
+        Optional<TraceData> trace = tracerService.trace(ip);
+        return trace.orElse(null);
     }
 }

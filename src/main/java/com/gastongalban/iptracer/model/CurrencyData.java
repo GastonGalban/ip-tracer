@@ -1,5 +1,7 @@
 package com.gastongalban.iptracer.model;
 
+import java.util.Objects;
+
 public class CurrencyData {
 
     private String code;
@@ -16,5 +18,13 @@ public class CurrencyData {
 
     public Double getUsdPrice() {
         return usdPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrencyData that = (CurrencyData) o;
+        return Objects.equals(code, that.code) && Objects.equals(usdPrice, that.usdPrice);
     }
 }

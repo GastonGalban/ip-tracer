@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +27,7 @@ class TracerControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(tracerService.trace(SOME_IP)).thenReturn(traceData);
+        when(tracerService.trace(SOME_IP)).thenReturn(Optional.of(traceData));
     }
 
     @Test
