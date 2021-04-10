@@ -6,33 +6,32 @@ import com.gastongalban.iptracer.client.restcountries.RestCountriesClient;
 import com.gastongalban.iptracer.model.CountryData;
 import com.gastongalban.iptracer.model.CurrencyData;
 import com.gastongalban.iptracer.model.TraceData;
+import com.gastongalban.iptracer.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Optional;
-import java.util.TimeZone;
 
 @Service
 public class TracerService {
 
     private IP2CountryClient ip2CountryClient;
-    private RestCountriesClient restCountriesClient;
     private CurrConvClient currConvClient;
     private DistanceCalculator distanceCalculator;
+    private CountryService countryService;
 
     @Autowired
     public TracerService(IP2CountryClient ip2CountryClient,
-                         RestCountriesClient restCountriesClient,
                          CurrConvClient currConvClient,
-                         DistanceCalculator distanceCalculator) {
+                         DistanceCalculator distanceCalculator,
+                         CountryService countryService) {
         this.ip2CountryClient = ip2CountryClient;
-        this.restCountriesClient = restCountriesClient;
+        this.countryService = countryService;
         this.currConvClient = currConvClient;
         this.distanceCalculator = distanceCalculator;
     }
@@ -40,8 +39,10 @@ public class TracerService {
     public Optional<TraceData> trace(String ip){
 
         Optional<String> countryCode = ip2CountryClient.getCountryCode(ip);
+
         if(countryCode.isPresent()){
-            Optional<CountryData> countryData = restCountriesClient.getCountryData(countryCode.get());
+
+            Optional<CountryData> countryData = countryService.getCountry(countryCode.get());
 
             if(countryData.isPresent()){
                 CountryData country = countryData.get();

@@ -1,9 +1,7 @@
 package com.gastongalban.iptracer.service;
 
 import com.gastongalban.iptracer.client.currconv.CurrConvClient;
-import com.gastongalban.iptracer.client.currconv.CurrConvTransformer;
 import com.gastongalban.iptracer.client.ip2country.IP2CountryClient;
-import com.gastongalban.iptracer.client.restcountries.RestCountriesClient;
 import com.gastongalban.iptracer.model.CountryData;
 import com.gastongalban.iptracer.model.CurrencyData;
 import com.gastongalban.iptracer.model.Location;
@@ -29,7 +27,7 @@ class TracerServiceTest {
     @InjectMocks
     private TracerService service;
     @Mock
-    private RestCountriesClient restCountriesClient;
+    private CountryService countryService;
     @Mock
     private IP2CountryClient ip2CountryClient;
     @Mock
@@ -57,7 +55,7 @@ class TracerServiceTest {
     @Test
     void traceTest() {
         when(ip2CountryClient.getCountryCode(eq(SOME_IP))).thenReturn(Optional.of("ARG"));
-        when(restCountriesClient.getCountryData(eq("ARG"))).thenReturn(Optional.of(countryData));
+        when(countryService.getCountry(eq("ARG"))).thenReturn(Optional.of(countryData));
         when(currConvClient.getCurrency(eq("ARG"))).thenReturn(Optional.of(0.010835d));
         when(distanceCalculator.calculate(eq(location))).thenReturn(0d);
 

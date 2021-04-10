@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class RestCountriesTransformer {
 
-    public CountryData transform(RestCountriesDTO restCountriesDTO) {
+    public CountryData transform(RestCountriesDTO restCountriesDTO, String countryCode) {
         String name = this.transformName(restCountriesDTO.getName(),restCountriesDTO.getTranslations());
 
         List<String> languages = restCountriesDTO.getLanguages()
@@ -26,7 +26,7 @@ public class RestCountriesTransformer {
 
         List<String> currencyCodes = restCountriesDTO.getCurrencies().stream().map(CurrencyDTO::getCode).collect(Collectors.toList());
 
-        return new CountryData(name, languages, location, timezones, currencyCodes);
+        return new CountryData(countryCode, name, languages, location, timezones, currencyCodes);
     }
 
     private String transformName(String name, Map<String, String> translations) {

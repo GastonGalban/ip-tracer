@@ -47,7 +47,8 @@ class RestCountriesTransformerTest {
     }
     @Test
     void transformTest() {
-        CountryData transform = transformer.transform(restCountriesDTO);
+        String countryCode = "DEU";
+        CountryData transform = transformer.transform(restCountriesDTO, countryCode);
         assertEquals("Alemania (Germany)", transform.getName());
         Location location = transform.getLocation();
         assertEquals(4.0, location.getLat(),0);

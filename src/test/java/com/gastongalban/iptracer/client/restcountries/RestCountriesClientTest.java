@@ -1,6 +1,5 @@
 package com.gastongalban.iptracer.client.restcountries;
 
-import com.gastongalban.iptracer.client.ip2country.IP2CountryClient;
 import com.gastongalban.iptracer.client.restcountries.dto.RestCountriesDTO;
 import com.gastongalban.iptracer.model.CountryData;
 import org.apache.http.HttpEntity;
@@ -20,6 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 class RestCountriesClientTest {
@@ -50,7 +50,8 @@ class RestCountriesClientTest {
         when(httpClient.execute(any(HttpGet.class))).thenReturn(httpResponse);
         when(httpResponse.getEntity()).thenReturn(httpEntity);
         when(httpEntity.getContent()).thenReturn(inputStream);
-        when(transformer.transform(any(RestCountriesDTO.class))).thenReturn(countryData);
+        String countryCode = "DEU";
+        when(transformer.transform(any(RestCountriesDTO.class), eq(countryCode))).thenReturn(countryData);
 
         Optional<CountryData> code = client.getCountryData("DEU");
 

@@ -37,7 +37,7 @@ public class RestCountriesClient {
             HttpResponse response = client.execute(request);
             String bodyResponse = EntityUtils.toString(response.getEntity());
             RestCountriesDTO restCountriesDTO = objectMapper.readValue(bodyResponse, RestCountriesDTO.class);
-            return Optional.of(this.transformer.transform(restCountriesDTO));
+            return Optional.of(this.transformer.transform(restCountriesDTO,countryCode));
         } catch (RuntimeException | IOException e) {
             LOGGER.error("There was an error while executing request",e);
             return Optional.empty();
