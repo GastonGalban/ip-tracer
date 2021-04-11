@@ -2,11 +2,10 @@ package com.gastongalban.iptracer.service;
 
 import com.gastongalban.iptracer.client.currconv.CurrConvClient;
 import com.gastongalban.iptracer.client.ip2country.IP2CountryClient;
-import com.gastongalban.iptracer.client.restcountries.RestCountriesClient;
 import com.gastongalban.iptracer.model.CountryData;
 import com.gastongalban.iptracer.model.CurrencyData;
 import com.gastongalban.iptracer.model.TraceData;
-import com.gastongalban.iptracer.repository.CountryRepository;
+import com.gastongalban.iptracer.repository.TraceDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +23,18 @@ public class TracerService {
     private CurrConvClient currConvClient;
     private DistanceCalculator distanceCalculator;
     private CountryService countryService;
+    private TraceDataRepository traceDataRepository;
 
     @Autowired
     public TracerService(IP2CountryClient ip2CountryClient,
                          CurrConvClient currConvClient,
                          DistanceCalculator distanceCalculator,
-                         CountryService countryService) {
+                         CountryService countryService, TraceDataRepository traceDataRepository) {
         this.ip2CountryClient = ip2CountryClient;
         this.countryService = countryService;
         this.currConvClient = currConvClient;
         this.distanceCalculator = distanceCalculator;
+        this.traceDataRepository = traceDataRepository;
     }
 
     public Optional<TraceData> trace(String ip){
@@ -59,7 +60,9 @@ public class TracerService {
                     Optional<Double> price = this.getCurrency(currCode);
                     price.ifPresent(aDouble -> builder.withCurrencyData(new CurrencyData(currCode, aDouble)));
                 });
-                return Optional.of(builder.build());
+                TraceData traceData = builder.build();
+                this.traceDataRepository.save(traceData);
+                return Optional.of(traceData);
             }
             return Optional.empty();
         }

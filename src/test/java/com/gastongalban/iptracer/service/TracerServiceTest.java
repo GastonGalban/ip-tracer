@@ -6,6 +6,7 @@ import com.gastongalban.iptracer.model.CountryData;
 import com.gastongalban.iptracer.model.CurrencyData;
 import com.gastongalban.iptracer.model.Location;
 import com.gastongalban.iptracer.model.TraceData;
+import com.gastongalban.iptracer.repository.TraceDataRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class TracerServiceTest {
@@ -34,6 +36,8 @@ class TracerServiceTest {
     private CurrConvClient currConvClient;
     @Mock
     private DistanceCalculator distanceCalculator;
+    @Mock
+    private TraceDataRepository traceDataRepository;
     @Mock
     private CountryData countryData;
     private List<String> currencyCodes = Collections.singletonList("ARG");
@@ -70,5 +74,7 @@ class TracerServiceTest {
         assertEquals(0d,traceData.getDistanceToBsAs());
         assertEquals(SOME_IP,traceData.getIp());
         assertEquals("ARG",traceData.getISOCode());
+
+        verify(traceDataRepository).save(traceData);
     }
 }
