@@ -14,4 +14,16 @@ public class TraceDataRepository {
     public void save(TraceData traceData){
         this.traceData.add(traceData);
     }
+
+    public Double getMaxDistance() {
+        return null;
+    }
+
+    public Double getMinDistance() {
+        return null;
+    }
+
+    public List<TraceData> getAll() {
+        return null;
+    }
 }
