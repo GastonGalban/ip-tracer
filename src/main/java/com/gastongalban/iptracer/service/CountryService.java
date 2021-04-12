@@ -1,5 +1,6 @@
 package com.gastongalban.iptracer.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gastongalban.iptracer.client.restcountries.RestCountriesClient;
 import com.gastongalban.iptracer.model.CountryData;
 import com.gastongalban.iptracer.repository.CountryRepository;
@@ -27,7 +28,12 @@ public class CountryService {
         } else {
             countryData = restCountriesClient.getCountryData(countryCode);
             if(countryData.isPresent()){
-                countryRepository.save(countryData.get());
+                try {
+                    countryRepository.insert(countryData.get());
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                    return Optional.empty();
+                }
                 return countryData;
             }
         }

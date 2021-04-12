@@ -1,8 +1,14 @@
 package com.gastongalban.iptracer.model;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private Double lat;
     private Double lon;
+
+    public Location (){
+
+    }
 
     public Location(Double lat, Double lon) {
         this.lat = lat;
@@ -15,5 +21,13 @@ public class Location {
 
     public Double getLon() {
         return lon;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 }

@@ -1,25 +1,14 @@
 version: '3'
 services:
-  java-app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    depends_on:
-      - mariadb
-    ports:
-      - 9290:9290
-    environment:
-      - MYSQL_HOST=mariadb
-  mariadb:
-    image: mariadb:10.2
-    ports:
-      - 3306:3306
-    volumes:
-      - data-mariadb:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=ip-tracer
-      - MYSQL_USER=root
-      - MYSQL_DATABASE=ip-tracer
 
-volumes:
-  data-mariadb:
+  database:
+    image: library/mysql:latest
+    ports:
+      - "3306:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init/init.sql:/data/application/init.sql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: ip-tracer
+      MYSQL_DATABASE: ip-tracer
