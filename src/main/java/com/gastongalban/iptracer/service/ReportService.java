@@ -21,13 +21,11 @@ public class ReportService {
     }
 
     public Optional<Double> getMaxDistance() {
-        Double maxDistance = traceDataRepository.getMaxDistance();
-        return Optional.of(maxDistance);
+        return traceDataRepository.getMaxDistance();
     }
 
     public Optional<Double> getMinDistance() {
-        Double minDistance = traceDataRepository.getMinDistance();
-        return Optional.of(minDistance);
+        return traceDataRepository.getMinDistance();
     }
 
     public Optional<Double> getAverageDistance() {

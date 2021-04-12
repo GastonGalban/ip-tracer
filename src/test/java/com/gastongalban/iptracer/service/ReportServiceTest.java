@@ -37,7 +37,7 @@ class ReportServiceTest {
 
     @Test
     void getMaxDistance() {
-        when(traceDataRepository.getMaxDistance()).thenReturn(100d);
+        when(traceDataRepository.getMaxDistance()).thenReturn(Optional.of(100d));
 
         Optional<Double> maxDistance = reportService.getMaxDistance();
 
@@ -47,7 +47,7 @@ class ReportServiceTest {
 
     @Test
     void getMinDistance() {
-        when(traceDataRepository.getMinDistance()).thenReturn(1d);
+        when(traceDataRepository.getMinDistance()).thenReturn(Optional.of(1d));
 
         Optional<Double> minDistance = reportService.getMinDistance();
 

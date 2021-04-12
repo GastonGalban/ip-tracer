@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TraceDataRepository {
@@ -15,15 +16,15 @@ public class TraceDataRepository {
         this.traceData.add(traceData);
     }
 
-    public Double getMaxDistance() {
-        return null;
+    public Optional<Double> getMaxDistance() {
+        return traceData.stream().map(TraceData::getDistanceToBsAs).max(Double::compareTo);
     }
 
-    public Double getMinDistance() {
-        return null;
+    public Optional<Double> getMinDistance() {
+        return traceData.stream().map(TraceData::getDistanceToBsAs).min(Double::compareTo);
     }
 
     public List<TraceData> getAll() {
-        return null;
+        return traceData;
     }
 }
