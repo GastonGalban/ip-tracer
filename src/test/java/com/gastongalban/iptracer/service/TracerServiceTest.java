@@ -75,6 +75,6 @@ class TracerServiceTest {
         assertEquals(SOME_IP,traceData.getIp());
         assertEquals("ARG",traceData.getISOCode());
 
-        verify(traceDataRepository).save(traceData);
+        verify(traceDataRepository).insert(traceData);
     }
 }

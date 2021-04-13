@@ -61,7 +61,7 @@ public class TracerService {
                     price.ifPresent(aDouble -> builder.withCurrencyData(new CurrencyData(currCode, aDouble)));
                 });
                 TraceData traceData = builder.build();
-                this.traceDataRepository.save(traceData);
+                this.traceDataRepository.insert(traceData);
                 return Optional.of(traceData);
             }
             return Optional.empty();

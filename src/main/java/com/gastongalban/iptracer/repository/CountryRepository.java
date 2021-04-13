@@ -3,24 +3,14 @@ package com.gastongalban.iptracer.repository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gastongalban.iptracer.model.CountryData;
-import com.mysql.cj.jdbc.ClientPreparedStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.border.EmptyBorder;
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.*;
-import java.util.Calendar;
 import java.util.Optional;
 
 @Component
@@ -32,7 +22,6 @@ public class CountryRepository{
 
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Optional<CountryData>> mapper;
-    private SimpleJdbcInsert simpleJdbcInsert;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -40,10 +29,6 @@ public class CountryRepository{
         this.mapper = mapper;
     }
 
-    @PostConstruct
-    public void setUp() {
-        this.simpleJdbcInsert = new SimpleJdbcInsert(this.jdbcTemplate).withTableName(TABLE_NAME).usingColumns("id");
-    }
 
     public Integer insert(CountryData entity) throws JsonProcessingException {
         return this.jdbcTemplate.update(INSERT_QUERY,
