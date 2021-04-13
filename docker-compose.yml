@@ -1,6 +1,16 @@
 version: '3'
 services:
 
+  java-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    ports:
+      - 9290:9290
+    environment:
+      - MYSQL_HOST=database
   database:
     image: library/mysql:latest
     ports:
